@@ -1,3 +1,9 @@
+from __future__ import division
+import sys
+import torch
+print("TORCH NO INICIO:", torch.__version__)
+print("TORCH NO SYS.MODULES:", "torch" in sys.modules)
+
 import cv2
 from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog
 from PyQt5.QtGui import QImage, QPixmap

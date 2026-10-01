@@ -47,7 +47,8 @@ class CounterThread(QThread):
         for video in self.videoList:
             self.last_max_id = 0
             cap = cv2.VideoCapture(video)
-            out =  cv2.VideoWriter(os.path.join(self.save_dir,video.split("/")[-1]), cv2.VideoWriter_fourcc('X', 'V', 'I', 'D'), 10, (1920, 1080))
+            output_fps = cap.get(cv2.CAP_PROP_FPS) or 30
+            out = cv2.VideoWriter(os.path.join(self.save_dir, video.split("/")[-1]), cv2.VideoWriter_fourcc('X', 'V', 'I', 'D'), output_fps, (1920, 1080))
             frame_count = 0
             while cap.isOpened():
                 # print(frame_count)
@@ -55,7 +56,7 @@ class CounterThread(QThread):
                     if not self.pause_flag:
                         ret, frame = cap.read()
                         if ret:
-                            if frame_count % 3 == 0:
+                            if frame_count % 10 == 0:
                                 a1 = time.time()
                                 frame = self.counter(self.permission, self.colorDict, frame,np.array(self.countArea), self.mot_tracker, video)
                                 self.sin_counterResult.emit(frame)
